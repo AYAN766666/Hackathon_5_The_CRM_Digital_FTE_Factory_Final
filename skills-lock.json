@@ -1,0 +1,20 @@
+{
+  "version": 1,
+  "skills": {
+    "browser-automation": {
+      "source": "shahfarzane/claude-code-browser-skills",
+      "sourceType": "github",
+      "computedHash": "482dc3174763886d9d77922fbbd5ad6ed1e7a1a56247f2a9d1183611ad3df7bd"
+    },
+    "crm-automation": {
+      "source": "claude-office-skills/skills",
+      "sourceType": "github",
+      "computedHash": "c73ecbe9c1869423ee086685851e897a4a846d0b0887927945626e37d2b21aa3"
+    },
+    "event-driven-architect": {
+      "source": "404kidwiz/claude-supercode-skills",
+      "sourceType": "github",
+      "computedHash": "31bc535ee747ac538c2402a600ae0912cf4753e8e4459fa318151e513b2e8783"
+    }
+  }
+}
