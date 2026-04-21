@@ -1,0 +1,118 @@
+openapi: 3.0.0
+info:
+  title: Multi-Channel Support API
+  version: 1.0.0
+  description: API for multi-channel customer support system
+paths:
+  /support/submit:
+    post:
+      summary: Submit support request via web form
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  minLength: 2
+                  maxLength: 50
+                email:
+                  type: string
+                  format: email
+                category:
+                  type: string
+                  enum: [General, Technical, Billing, Feedback, Bug Report]
+                message:
+                  type: string
+                  minLength: 20
+                  maxLength: 1000
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  ticket_id:
+                    type: string
+                    description: Unique ticket identifier
+                  status:
+                    type: string
+                    enum: [created, escalated]
+        '400':
+          description: Validation error
+  /support/ticket/{ticket_id}:
+    get:
+      summary: Get ticket status and conversation history
+      parameters:
+        - name: ticket_id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Ticket status and messages
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  ticket_id:
+                    type: string
+                  status:
+                    type: string
+                    enum: [active, closed, escalated]
+                  messages:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        sender:
+                          type: string
+                        content:
+                          type: string
+                        timestamp:
+                          type: string
+                          format: date-time
+        '404':
+          description: Ticket not found
+  /webhooks/gmail:
+    post:
+      summary: Receive Gmail webhook notifications
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                subject:
+                  type: string
+                body:
+                  type: string
+      responses:
+        '200':
+          description: Successfully received
+  /webhooks/whatsapp:
+    post:
+      summary: Receive WhatsApp webhook notifications
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                From:
+                  type: string
+                Body:
+                  type: string
+      responses:
+        '200':
+          description: Successfully received

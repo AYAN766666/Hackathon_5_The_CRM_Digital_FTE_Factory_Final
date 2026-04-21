@@ -1,55 +1,68 @@
-# [PROJECT_NAME] Constitution
-<!-- Example: Spec Constitution, TaskFlow Constitution, etc. -->
+<!-- SYNC IMPACT REPORT:
+Version change: 1.0.0 → 1.1.0
+Modified principles: [PRINCIPLE_1_NAME] → Customer Success FTE – Multi-Channel AI Support System
+Added sections: Core Technologies, Event System, Channel Integration, AI Processing, Customer Identification, Conversation Rules, Metrics Tracking, Skills Installation, Backend/Frontend Structure, Kubernetes Deployment, Testing, Demo Flow
+Removed sections: None
+Templates requiring updates: ✅ Updated
+Follow-up TODOs: None
+-->
+# Customer Success FTE – Multi-Channel AI Support System Constitution
 
 ## Core Principles
 
-### [PRINCIPLE_1_NAME]
-<!-- Example: I. Library-First -->
-[PRINCIPLE_1_DESCRIPTION]
-<!-- Example: Every feature starts as a standalone library; Libraries must be self-contained, independently testable, documented; Clear purpose required - no organizational-only libraries -->
+### Customer Success FTE – Multi-Channel AI Support System
+Multi-channel AI-powered customer support system that receives and responds to users through Email, WhatsApp, and Web Support Form. System must store all conversations, identify customers across channels, and auto-respond using AI.
 
-### [PRINCIPLE_2_NAME]
-<!-- Example: II. CLI Interface -->
-[PRINCIPLE_2_DESCRIPTION]
-<!-- Example: Every library exposes functionality via CLI; Text in/out protocol: stdin/args → stdout, errors → stderr; Support JSON + human-readable formats -->
+### AI-Powered Customer Support
+Uses Gemini API with gemini-2.0-flash or gemini-flash2.0 model for understanding customer messages, generating responses, detecting escalation cases, extracting structured data, message classification, sentiment scoring, and tool calling.
 
-### [PRINCIPLE_3_NAME]
-<!-- Example: III. Test-First (NON-NEGOTIABLE) -->
-[PRINCIPLE_3_DESCRIPTION]
-<!-- Example: TDD mandatory: Tests written → User approved → Tests fail → Then implement; Red-Green-Refactor cycle strictly enforced -->
+### Event-Driven Architecture with Apache Kafka
+Uses Apache Kafka for asynchronous message processing, channel separation, reliability, and scalability. Key topics include fte.tickets.incoming, fte.channels.email.inbound, fte.channels.whatsapp.inbound, fte.channels.webform.inbound, fte.channels.email.outbound, fte.channels.whatsapp.outbound, fte.metrics, fte.escalations, and fte.dlq.
 
-### [PRINCIPLE_4_NAME]
-<!-- Example: IV. Integration Testing -->
-[PRINCIPLE_4_DESCRIPTION]
-<!-- Example: Focus areas requiring integration tests: New library contract tests, Contract changes, Inter-service communication, Shared schemas -->
+### Cross-Channel Customer Identification
+System must identify users across channels with matching priority: email, phone number, other identifiers. Customers sending emails should be linked to subsequent WhatsApp messages from the same person.
 
-### [PRINCIPLE_5_NAME]
-<!-- Example: V. Observability, VI. Versioning & Breaking Changes, VII. Simplicity -->
-[PRINCIPLE_5_DESCRIPTION]
-<!-- Example: Text I/O ensures debuggability; Structured logging required; Or: MAJOR.MINOR.BUILD format; Or: Start simple, YAGNI principles -->
+### Conversation Lifecycle Management
+Conversations have a 24-hour active window. If a message arrives after 24 hours, a new conversation is created. Conversation table stores customer_id, channel, sentiment_score, and status.
 
-### [PRINCIPLE_6_NAME]
+### Backend Framework Standardization
+Uses FastAPI for API endpoints, webhooks, conversation management, ticket creation, and AI agent calling. Server command: uvicorn main:app --reload.
 
+## Technology Stack
 
-[PRINCIPLE__DESCRIPTION]
+### Database Standard
+Uses NeonDB (PostgreSQL) to store customers, conversations, messages, and metrics. Tables include customers, customer_identifiers, conversations, and messages. pgvector extension for embeddings if knowledge search is implemented.
 
-## [SECTION_2_NAME]
-<!-- Example: Additional Constraints, Security Requirements, Performance Standards, etc. -->
+### Channel Integration Protocols
+- Email: Gmail API with webhook flow to FastAPI → Kafka → AI Agent → Email Response
+- WhatsApp: Twilio WhatsApp Sandbox with webhook flow to FastAPI → Kafka → AI Agent → WhatsApp Response
+- Web Support Form: Next.js frontend with Name, Email, Category, Message fields
 
-[SECTION_2_CONTENT]
-<!-- Example: Technology stack requirements, compliance standards, deployment policies, etc. -->
+## Development Standards
 
-## [SECTION_3_NAME]
-<!-- Example: Development Workflow, Review Process, Quality Gates, etc. -->
+### AI Processing Responsibilities
+AI agent responsibilities include: understanding message, identifying customer intent, retrieving conversation context, generating helpful response, and deciding if escalation required. Example prompt: "You are a customer support assistant. Understand the customer message. Provide a helpful answer. If the problem cannot be solved automatically mark escalation_required = true."
 
-[SECTION_3_CONTENT]
-<!-- Example: Code review requirements, testing gates, deployment approval process, etc. -->
+### Metrics and Monitoring
+Every message stores metrics: latency_ms, sentiment_score, tool_calls, escalation_required. Metrics published to fte.metrics topic for monitoring and analysis.
+
+### Skills and Automation
+Install Claude SuperCode skills for event-driven architecture, channel processing, and automation helpers. Command: npx skills add https://github.com/404kidwiz/claude-supercode-skills --skill event-driven-architect
+
+## System Architecture
+
+### Folder Structure Standards
+Backend folder structure includes main.py, database.py, models.py, schemas.py, routes/email.py, whatsapp.py, webform.py, workers/message_processor.py, and services/ai_agent.py, customer_service.py, conversation_service.py.
+Frontend folder structure includes app/support/page.tsx, components/SupportForm.tsx, and lib/api.ts.
+
+### Deployment Strategy
+Kubernetes deployment with API Deployment, Worker Deployment, Kafka, Ingress, ConfigMap, and Secrets in customer-success-fte namespace. Horizontal Pod Autoscaler enabled for scaling.
+
+### Testing Frameworks
+Backend: pytest; Frontend: Playwright; Load testing: Locust. Test scenarios include 100+ web submissions, 50+ email messages, 50+ WhatsApp messages, and cross-channel customers.
 
 ## Governance
-<!-- Example: Constitution supersedes all other practices; Amendments require documentation, approval, migration plan -->
 
-[GOVERNANCE_RULES]
-<!-- Example: All PRs/reviews must verify compliance; Complexity must be justified; Use [GUIDANCE_FILE] for runtime development guidance -->
+This constitution establishes the foundational principles for the Customer Success FTE – Multi-Channel AI Support System. All development, testing, and deployment activities must comply with these principles. Changes to these principles require explicit approval and documentation of the impact on existing systems. All team members must adhere to the technology stack, architecture patterns, and development standards outlined herein.
 
-**Version**: [CONSTITUTION_VERSION] | **Ratified**: [RATIFICATION_DATE] | **Last Amended**: [LAST_AMENDED_DATE]
-<!-- Example: Version: 2.1.1 | Ratified: 2025-06-13 | Last Amended: 2025-07-16 -->
+**Version**: 1.1.0 | **Ratified**: 2026-03-12 | **Last Amended**: 2026-03-12

@@ -1,0 +1,5 @@
+2026/03/17-04:34:43.719 2664 Creating DB E:\Hackathon 5\The CRM Digital FTE Factory Final\backend\.whatsapp_session\Default\IndexedDB\https_web.whatsapp.com_0.indexeddb.leveldb since it was missing.
+2026/03/17-04:34:43.754 2664 Reusing MANIFEST E:\Hackathon 5\The CRM Digital FTE Factory Final\backend\.whatsapp_session\Default\IndexedDB\https_web.whatsapp.com_0.indexeddb.leveldb/MANIFEST-000001
+2026/03/17-04:35:25.669 3f74 Level-0 table #5: started
+2026/03/17-04:35:25.725 3f74 Level-0 table #5: 1006407 bytes OK
+2026/03/17-04:35:25.728 3f74 Delete type=0 #3
