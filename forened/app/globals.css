@@ -9,6 +9,8 @@
   --error: #dc2626;
   --gray-light: #E0E0E0;
   --gray-medium: #6b7280;
+  --font-geist-sans: "Geist Sans", "Inter", system-ui, -apple-system, sans-serif;
+  --font-geist-mono: "Geist Mono", "Roboto Mono", monospace;
 }
 
 @theme inline {
